@@ -1,16 +1,31 @@
 package com.game.repository;
 
 import com.game.entity.Player;
+import com.game.util.DataInfo;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Repository(value = "db")
 public class PlayerRepositoryDB implements IPlayerRepository {
 
-    public PlayerRepositoryDB() {
+    private final SessionFactory sessionFactory;
 
+    public PlayerRepositoryDB() {
+        //todo Остановился здесь
+        /*Properties properties = new Properties();
+        properties.put(Environment.DRIVER, DataInfo.getDRIVER());
+        properties.put(Environment.URL, DataInfo.getURL());
+        properties.put(Environment.DIALECT, DataInfo.getDIALECT());
+        properties.put(Environment.USER, DataInfo.getUSER());
+        properties.put(Environment.PASS, DataInfo.getPASSWORD());
+        sessionFactory = new Configuration()
+                .setProperties(properties);*/
     }
 
     @Override

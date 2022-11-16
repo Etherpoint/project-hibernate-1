@@ -1,23 +1,46 @@
 package com.game.entity;
 
+import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
+
 import java.util.Date;
 
 
+
+@Entity
+@Table(name = "player")
 public class Player {
+    @Id
+    @GeneratedValue
+    @NonNull
     private Long id;
 
+    @Column(name = "name", length = 12)
+    @NonNull
     private String name;
 
+    @Column(name = "title", length = 30)
+    @NonNull
     private String title;
 
+    @Column(name = "race")
+    @Enumerated(EnumType.ORDINAL)
+    @NonNull
     private Race race;
 
+
+    @Column(name = "profession")
+    @Enumerated(EnumType.ORDINAL)
+    @NonNull
     private Profession profession;
 
+    @NonNull
     private Date birthday;
 
+    @NonNull
     private Boolean banned;
 
+    @NonNull
     private Integer level;
 
     public Player() {
