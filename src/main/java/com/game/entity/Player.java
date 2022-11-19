@@ -5,8 +5,6 @@ import org.springframework.lang.NonNull;
 
 import java.util.Date;
 
-
-
 @Entity
 @Table(name = "player")
 public class Player {
