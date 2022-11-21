@@ -6,39 +6,33 @@ import org.springframework.lang.NonNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "player")
+@Table(schema = "rpg", name = "player")
 public class Player {
     @Id
-    @GeneratedValue
-    @NonNull
+    @Column(nullable = false)
     private Long id;
 
-    @Column(name = "name", length = 12)
-    @NonNull
+    @Column(length = 12, nullable = false)
     private String name;
 
-    @Column(name = "title", length = 30)
-    @NonNull
+    @Column(length = 30, nullable = false)
     private String title;
 
-    @Column(name = "race")
     @Enumerated(EnumType.ORDINAL)
-    @NonNull
+    @Column(nullable = false)
     private Race race;
 
-
-    @Column(name = "profession")
     @Enumerated(EnumType.ORDINAL)
-    @NonNull
+    @Column(nullable = false)
     private Profession profession;
 
-    @NonNull
+    @Column(nullable = false)
     private Date birthday;
 
-    @NonNull
+    @Column(nullable = false)
     private Boolean banned;
 
-    @NonNull
+    @Column(nullable = false)
     private Integer level;
 
     public Player() {

@@ -1,17 +1,23 @@
 package com.game.repository;
 
 import com.game.entity.Player;
+import com.game.util.Cfg;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Repository(value = "db")
 public class PlayerRepositoryDB implements IPlayerRepository {
-    //todo Убрать комментарии
 
-/*    private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public PlayerRepositoryDB() {
         Properties properties = new Properties();
@@ -22,19 +28,25 @@ public class PlayerRepositoryDB implements IPlayerRepository {
         properties.put(Environment.PASS, Cfg.getPASSWORD());
         properties.put(Environment.HBM2DDL_AUTO, "update");
         sessionFactory = new Configuration()
-                .configure()
                 .setProperties(properties)
                 .addAnnotatedClass(Player.class)
                 .buildSessionFactory();
-    }*/
+    }
 
     @Override
     public List<Player> getAll(int pageNumber, int pageSize) {
-        return null;
+        try(Session session = sessionFactory.openSession()){
+            NativeQuery<Player> nativeQuery = session
+                    .createNativeQuery("SELECT * FROM 'player'", Player.class);
+            nativeQuery.setFirstResult(pageNumber*pageSize);
+            return nativeQuery.list();
+        }
     }
 
     @Override
     public int getAllCount() {
+        try(Session session = sessionFactory.openSession()){
+        }
         return 0;
     }
 
@@ -60,6 +72,6 @@ public class PlayerRepositoryDB implements IPlayerRepository {
 
     @PreDestroy
     public void beforeStop() {
-
+        sessionFactory.close();
     }
 }
