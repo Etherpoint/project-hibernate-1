@@ -46,8 +46,9 @@ public class PlayerRepositoryDB implements IPlayerRepository {
     @Override
     public int getAllCount() {
         try(Session session = sessionFactory.openSession()){
+            NativeQuery<Integer> result = session.createNativeQuery("Player_getAllCount", int.class);
+            return result.uniqueResult();
         }
-        return 0;
     }
 
     @Override

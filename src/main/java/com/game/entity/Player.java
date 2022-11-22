@@ -1,12 +1,14 @@
 package com.game.entity;
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
 
 import java.util.Date;
 
 @Entity
 @Table(schema = "rpg", name = "player")
+@org.hibernate.annotations.NamedQueries({
+        @org.hibernate.annotations.NamedQuery(name = "Player_getAllCount", query = "SELECT COUNT(*) FROM Player")
+})
 public class Player {
     @Id
     @Column(nullable = false)
