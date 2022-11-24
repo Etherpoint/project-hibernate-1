@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PreDestroy;
@@ -36,9 +37,9 @@ public class PlayerRepositoryDB implements IPlayerRepository {
     @Override
     public List<Player> getAll(int pageNumber, int pageSize) {
         try(Session session = sessionFactory.openSession()){
-            NativeQuery<Player> nativeQuery = session
-                    .createNativeQuery("SELECT * FROM 'player'", Player.class);
+            NativeQuery<Player> nativeQuery = session.createNativeQuery("SELECT * FROM Player", Player.class);
             nativeQuery.setFirstResult(pageNumber*pageSize);
+            nativeQuery.setMaxResults(pageSize);
             return nativeQuery.list();
         }
     }
@@ -46,8 +47,8 @@ public class PlayerRepositoryDB implements IPlayerRepository {
     @Override
     public int getAllCount() {
         try(Session session = sessionFactory.openSession()){
-            NativeQuery<Integer> result = session.createNativeQuery("Player_getAllCount", int.class);
-            return result.uniqueResult();
+            Query<Long> result = session.createNamedQuery("Player_getAllCount", Long.class);
+            return Math.toIntExact(result.uniqueResult());
         }
     }
 
